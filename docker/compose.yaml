@@ -1,0 +1,42 @@
+services:
+  ros-core:
+    image: ros:noetic-ros-base
+    container_name: ros-core
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/dri:/dev/dri
+      - /dev/shm:/dev/shm
+    command: bash -c "source /opt/ros/noetic/setup.bash 
+      && roscore"
+  ros1bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: deploy
+    image: cyhsiang/dit-ros1bridge:latest
+    container_name: ros1bridge
+    depends_on:
+      - ros-core
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /
+    environment:
+      - ROS_LOCALHOST_ONLY=0
+      - ROS_DOMAIN_ID=0
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/dri:/dev/dri
+      - /dev/shm:/dev/shm
+    command: bash -c "source /ros2_humble/install/setup.bash 
+      && source /ros2_humble/install/ros1_bridge/share/ros1_bridge/local_setup.bash
+      && export ROS_MASTER_URI=http://localhost:11311
+      && ros2 run ros1_bridge dynamic_bridge"
