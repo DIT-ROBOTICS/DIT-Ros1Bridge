@@ -58,6 +58,12 @@ FROM base AS deploy
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
+    apt-get update && apt-get install -y \
+    libspdlog-dev \
+    python3-packaging \
+    ros-core-dev 
+
 RUN mkdir -p /ros2_humble
 COPY --from=build /ros2_humble/install /ros2_humble/install
 
