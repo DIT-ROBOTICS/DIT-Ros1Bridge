@@ -1,0 +1,29 @@
+services:
+  ros1:
+    image: osrf/ros:noetic-desktop-full
+    container_name: ros1
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/dri:/dev/dri
+      - /dev/shm:/dev/shm
+    command: ["/bin/bash"]
+  ros2:
+    image: osrf/ros:humble-desktop-full
+    container_name: ros2
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    working_dir: /
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /dev/dri:/dev/dri
+      - /dev/shm:/dev/shm
+    command: ["/bin/bash"]

@@ -29,6 +29,8 @@ FROM base AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
+
 # Install ROS 2 Humble
 COPY modules/install_ros_humble.sh /tmp/install_ros_humble.sh
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
@@ -57,6 +59,8 @@ CMD ["/bin/bash"]
 FROM base AS deploy
 
 ENV DEBIAN_FRONTEND=noninteractive
+
+RUN rm -f /etc/apt/apt.conf.d/docker-clean; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache
 
 RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     apt-get update && apt-get install -y \

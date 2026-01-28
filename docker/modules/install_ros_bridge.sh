@@ -12,9 +12,9 @@ mkdir -p src/ros1_bridge/src \
     && cd /ros2_humble
 
 # Source the ROS 2 workspace
-. /ros2_humble/install/local_setup.bash
+source install/setup.bash
 
 # Build
-colcon build --packages-select ros1_bridge --cmake-args -DCMAKE_BUILD_TYPE=Release
+colcon build --packages-select ros1_bridge --cmake-force-configure
 
 echo "ROS Bridge installation completed successfully!"
