@@ -37,7 +37,7 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=private \
     /tmp/install_ros_humble.sh && rm /tmp/install_ros_humble.sh
 
 # Install ROS Noetic
-# ref: https://docs.ros.org/en/iron/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html
+# ref: https://docs.ros.org/en/humble/How-To-Guides/Using-ros1_bridge-Jammy-upstream.html
 # ref: https://github.com/osrf/docker_images/issues/635#issuecomment-1217505552
 # If there is still issue, try to comment the command below and enter the container to see the correct file name under /etc/apt/sources.list.d/
 RUN rm -rf /etc/apt/sources.list.d/ros2.sources
